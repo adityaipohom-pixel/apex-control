@@ -1,0 +1,314 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   APEX CONTROL - design tokens
+   Dark glassmorphism control-centre theme. Accent + surface colours are CSS
+   variables so the Settings page can re-theme the dashboard at runtime.
+   ========================================================================== */
+
+:root {
+  /* accent (default: cyan) */
+  --accent-rgb: 34 211 238;
+  --accent2-rgb: 129 140 248;
+
+  /* surfaces (default: obsidian) */
+  --bg-900: 4 6 12;
+  --bg-800: 8 11 19;
+  --bg-700: 13 17 28;
+
+  --glass-bg: 255 255 255;
+  --glass-alpha: 0.045;
+  --glass-border: 255 255 255;
+
+  color-scheme: dark;
+}
+
+/* --- surface themes ------------------------------------------------------ */
+[data-surface='obsidian'] {
+  --bg-900: 4 6 12;
+  --bg-800: 8 11 19;
+  --bg-700: 13 17 28;
+}
+
+[data-surface='navy'] {
+  --bg-900: 4 8 22;
+  --bg-800: 7 13 32;
+  --bg-700: 11 19 44;
+}
+
+[data-surface='graphite'] {
+  --bg-900: 8 8 10;
+  --bg-800: 14 14 17;
+  --bg-700: 20 20 24;
+}
+
+[data-surface='midnight'] {
+  --bg-900: 2 3 8;
+  --bg-800: 5 7 15;
+  --bg-700: 9 11 22;
+}
+
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply font-sans text-slate-100 antialiased;
+    margin: 0;
+    background-color: rgb(var(--bg-900));
+    background-image:
+      radial-gradient(1100px 620px at 12% -8%, rgb(var(--accent-rgb) / 0.16), transparent 60%),
+      radial-gradient(900px 560px at 92% 4%, rgb(var(--accent2-rgb) / 0.16), transparent 62%),
+      radial-gradient(1200px 700px at 60% 108%, rgb(var(--accent-rgb) / 0.1), transparent 60%),
+      linear-gradient(180deg, rgb(var(--bg-900)) 0%, rgb(var(--bg-800)) 45%, rgb(var(--bg-900)) 100%);
+    background-attachment: fixed;
+    overflow: hidden;
+  }
+
+  /* faint technical grid + vignette, keeps the glass readable */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(circle at 50% 30%, black, transparent 78%);
+    -webkit-mask-image: radial-gradient(circle at 50% 30%, black, transparent 78%);
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background: radial-gradient(circle at 50% 45%, transparent 45%, rgb(0 0 0 / 0.55) 100%);
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-semibold tracking-tight;
+  }
+
+  ::selection {
+    background: rgb(var(--accent-rgb) / 0.3);
+  }
+
+  /* scrollbars - thin and unobtrusive */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(255 255 255 / 0.14) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: rgb(255 255 255 / 0.14);
+    border-radius: 999px;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: rgb(255 255 255 / 0.24);
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent/70 ring-offset-2 ring-offset-[rgb(var(--bg-900))];
+  }
+}
+
+@layer components {
+  /* --- glass surface ----------------------------------------------------- */
+  .glass {
+    background: linear-gradient(
+      160deg,
+      rgb(var(--glass-bg) / calc(var(--glass-alpha) + 0.035)) 0%,
+      rgb(var(--glass-bg) / var(--glass-alpha)) 42%,
+      rgb(0 0 0 / 0.18) 100%
+    );
+    border: 1px solid rgb(var(--glass-border) / 0.1);
+    box-shadow:
+      inset 0 1px 0 0 rgb(255 255 255 / 0.07),
+      0 20px 45px -28px rgb(0 0 0 / 0.95);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+  }
+
+  .glass-soft {
+    background: rgb(var(--glass-bg) / 0.035);
+    border: 1px solid rgb(var(--glass-border) / 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .glass-inset {
+    background: rgb(0 0 0 / 0.28);
+    border: 1px solid rgb(255 255 255 / 0.07);
+    box-shadow: inset 0 2px 10px 0 rgb(0 0 0 / 0.45);
+  }
+
+  /* --- typography helpers ------------------------------------------------- */
+  .label-xs {
+    @apply text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400;
+  }
+
+  .num {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+  }
+
+  /* --- interaction ------------------------------------------------------- */
+  .tap {
+    @apply relative select-none;
+    min-width: 44px;
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+
+  .press {
+    @apply transition duration-200 ease-swipe;
+  }
+
+  .press:active {
+    transform: scale(0.97);
+  }
+
+  .press-lg:active {
+    transform: scale(0.98);
+  }
+
+  /* skeleton shimmer */
+  .skeleton {
+    @apply relative overflow-hidden rounded-xl bg-white/5;
+  }
+
+  .skeleton::after {
+    content: '';
+    @apply absolute inset-0 -translate-x-full;
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.09), transparent);
+    animation: shimmer 1.6s infinite;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* range input (volume / brightness) - large, touch friendly */
+  .range {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 44px;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .range::-webkit-slider-runnable-track {
+    height: 12px;
+    border-radius: 999px;
+    background: linear-gradient(
+      to right,
+      rgb(var(--accent-rgb) / 0.95) var(--range-progress, 50%),
+      rgb(255 255 255 / 0.1) var(--range-progress, 50%)
+    );
+  }
+
+  .range::-moz-range-track {
+    height: 12px;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.1);
+  }
+
+  .range::-moz-range-progress {
+    height: 12px;
+    border-radius: 999px;
+    background: rgb(var(--accent-rgb) / 0.95);
+  }
+
+  .range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 26px;
+    height: 26px;
+    margin-top: -7px;
+    border-radius: 999px;
+    background: #fff;
+    border: 4px solid rgb(var(--accent-rgb));
+    box-shadow: 0 4px 14px -2px rgb(0 0 0 / 0.7);
+    transition: transform 0.15s ease;
+  }
+
+  .range::-moz-range-thumb {
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    background: #fff;
+    border: 4px solid rgb(var(--accent-rgb));
+    box-shadow: 0 4px 14px -2px rgb(0 0 0 / 0.7);
+  }
+
+  .range:active::-webkit-slider-thumb {
+    transform: scale(1.12);
+  }
+}
+
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 18px rgb(var(--accent-rgb) / 0.45);
+  }
+
+  .safe-b {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .safe-t {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  .scroll-touch {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  .no-anim * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
