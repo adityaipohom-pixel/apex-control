@@ -106,7 +106,7 @@ export function AppsPage() {
           icon={<Pin className="h-4 w-4" />}
           action={<span className="text-[11px] text-slate-500">{quickApps.length} pinned</span>}
         />
-        <div className="grid grid-cols-3 gap-2.5 sm:grid-cols-4 sm:gap-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3 lg:grid-cols-4 xl:grid-cols-5">
           {quickApps.map((app, index) => (
             <div key={app.id} className="relative">
               <AppCard app={app} launching={launching === app.id} onLaunch={(id) => void launch(id)} />
@@ -114,7 +114,7 @@ export function AppsPage() {
                 <IconButton
                   label={`Move ${app.name} left`}
                   size="sm"
-                  className="!h-9 !w-9"
+                  className="!h-11 !w-11"
                   disabled={index === 0}
                   onClick={() => moveApp(app.id, -1)}
                   icon={<ChevronLeft className="h-4 w-4" />}
@@ -122,14 +122,14 @@ export function AppsPage() {
                 <IconButton
                   label={`Unpin ${app.name}`}
                   size="sm"
-                  className="!h-9 !w-9"
+                  className="!h-11 !w-11"
                   onClick={() => unpinApp(app.id)}
                   icon={<PinOff className="h-4 w-4" />}
                 />
                 <IconButton
                   label={`Move ${app.name} right`}
                   size="sm"
-                  className="!h-9 !w-9"
+                  className="!h-11 !w-11"
                   disabled={index === quickApps.length - 1}
                   onClick={() => moveApp(app.id, 1)}
                   icon={<ChevronRight className="h-4 w-4" />}
@@ -182,7 +182,7 @@ export function AppsPage() {
             description="Try a different keyword or category."
           />
         ) : (
-          <div className="grid grid-cols-3 gap-2.5 sm:grid-cols-4 sm:gap-3 lg:grid-cols-6">
+          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3 lg:grid-cols-4 xl:grid-cols-5">
             {filtered.map((app) => (
               <div key={app.id} className="relative">
                 <AppCard app={app} launching={launching === app.id} onLaunch={(id) => void launch(id)} />
@@ -195,7 +195,7 @@ export function AppsPage() {
                     <Button
                       size="sm"
                       variant="ghost"
-                      className="!min-h-9 !px-2.5 !text-[11px]"
+                      className="!min-h-11 !px-3 !text-[11px]"
                       icon={<Pin className="h-3.5 w-3.5" />}
                       onClick={() => pinApp(app.id)}
                     >
@@ -207,7 +207,7 @@ export function AppsPage() {
                       label={`Delete ${app.name}`}
                       size="sm"
                       tone="danger"
-                      className="!h-9 !w-9"
+                      className="!h-11 !w-11"
                       onClick={() => removeApp(app.id)}
                       icon={<Trash2 className="h-4 w-4" />}
                     />

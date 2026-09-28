@@ -79,7 +79,7 @@ interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const ICON_SIZES = {
-  sm: 'h-10 w-10 rounded-xl',
+  sm: 'h-11 w-11 rounded-xl',
   md: 'h-12 w-12 rounded-2xl',
   lg: 'h-14 w-14 rounded-2xl',
 } as const

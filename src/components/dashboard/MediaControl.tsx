@@ -166,7 +166,7 @@ export function MediaControl({ controller, className, expanded = false }: MediaC
       </div>
 
       <div className="mt-2 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2.5">
-        <IconButton label="Shuffle" size="sm" className="!h-10 !w-10" icon={<Shuffle className="h-4 w-4" />} />
+        <IconButton label="Shuffle" size="sm" className="!h-11 !w-11" icon={<Shuffle className="h-4 w-4" />} />
         <IconButton
           label="Previous track"
           size="md"
@@ -192,7 +192,7 @@ export function MediaControl({ controller, className, expanded = false }: MediaC
           onClick={controller.next}
           icon={<SkipForward className="h-5 w-5" />}
         />
-        <IconButton label="Repeat" size="sm" className="!h-10 !w-10" icon={<Repeat className="h-4 w-4" />} />
+        <IconButton label="Repeat" size="sm" className="!h-11 !w-11" icon={<Repeat className="h-4 w-4" />} />
       </div>
 
       {error ? <p className="mt-3 text-center text-[11px] text-rose-300">{error}</p> : null}

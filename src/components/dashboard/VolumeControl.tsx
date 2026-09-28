@@ -59,7 +59,7 @@ export function VolumeControl({ controller, className }: VolumeControlProps) {
                 onClick={() => controller.commitVolume(preset)}
                 disabled={pending}
                 className={cn(
-                  'press rounded-lg px-2 py-1 text-[10px] font-semibold text-slate-500 transition hover:bg-white/5 hover:text-slate-200 disabled:opacity-40',
+                  'press flex min-h-[44px] items-center justify-center rounded-lg px-2 text-[10px] font-semibold text-slate-500 transition hover:bg-white/5 hover:text-slate-200 disabled:opacity-40',
                   display === preset && 'text-accent',
                 )}
                 aria-label={`Set volume to ${preset}%`}
